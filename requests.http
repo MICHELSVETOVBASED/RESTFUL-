@@ -1,0 +1,3 @@
+GET http://localhost:44302/api/profile
+Content-Type: application/json
+//
