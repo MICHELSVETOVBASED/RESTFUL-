@@ -4,7 +4,10 @@ namespace RESTREST_2.Services;
 
 public class ProfileRepository{
     private const string CacheKey = "CasStore";
-    private RequestDelegate _next;
+     
+
+    public ProfileRepository(IHttpContextAccessor httpContextAccessor)
+        => public readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     public Profile[] GetAllProfiles(){
         return[
             new Profile{

@@ -5,6 +5,7 @@ builder.Services.AddMvc();
 // Adding a Swagger service (after NuGet packages are installed)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 app.UseSwagger();

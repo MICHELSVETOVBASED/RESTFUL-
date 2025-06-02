@@ -6,6 +6,7 @@ namespace RESTREST_2.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class ProfileController : ControllerBase{
+    
     private ProfileRepository profileRepository;
     
 
