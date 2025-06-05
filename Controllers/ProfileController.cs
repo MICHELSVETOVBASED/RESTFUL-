@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RESTREST_2.Models;
 using RESTREST_2.Services;
+using Microsoft.AspNetCore.Http;
 namespace RESTREST_2.Controllers;
 
 [ApiController]
@@ -11,7 +12,7 @@ public class ProfileController : ControllerBase{
     
 
     public ProfileController(){
-        this.profileRepository = new ProfileRepository();
+        profileRepository = new ProfileRepository();
     }
     
     
