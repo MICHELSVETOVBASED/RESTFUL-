@@ -12,6 +12,7 @@ builder.Services.AddTransient<ProfileRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<ProfileRepository>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment()){
@@ -21,9 +22,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseRouting();
 //app.MapGet("/", () => "Start succeeded");
-app.UseMvc(routes =>
-    routes.MapRoute(name: "default",
-        template: "{controller=Profile}/{action=Index}"));
 app.MapControllerRoute("default",
         "{controller=Profile}/{action=Index}");
 app.MapControllers();
