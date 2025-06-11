@@ -29,7 +29,7 @@ public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemory
         ];
             cache.Set(CacheKey, profiles, TimeSpan.FromMinutes(30));
 
-            return profiles!; 
+            return profiles; 
     }
 
         public bool SaveProfile(Profile profile){
