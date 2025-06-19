@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profiles</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Profiles</h2>
+    <ul id="profiles"></ul>
+
+    <script type="text/javascript">
+        $(function() {
+            console.log('Page loaded, making API request...');
+            $.getJSON('/api/profile')
+                .done(function (profiles) {
+                    console.log('API response:', profiles);
+                    $(profiles).each(function (i, profile) {
+                        $('#profiles').append('<li class="profile-item">' + profile.name + '</li>');
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('API request failed:', textStatus, errorThrown);
+                    $('#profiles').append('<li style="color: red">Error loading profiles</li>');
+                });
+        
+
+            $('#saveProfile').click(function (event) {
+                
+                const data = {
+                    Id: $('#profileId').val(),
+                    Name: $('#profileName').val()
+                };
+                event.preventDefault();
+                console.log('Saving profile...');
+                $.ajax({
+                    url: '/api/profile',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                }).done(function (response) {
+                    $('#profiles').append('<li class="profile-item">' + response.name + '</li>');
+                    $('#saveProfileForm')[0].reset();
+                }).fail(function(jqXHR,textStatus){
+                        alert('Err on saving ' + textStatus);
+                });
+            });
+        });
+    </script>
+    <form id="saveProfileForm" method="post">
+        <h3>Create a new profile</h3>
+        <p>
+            <label for="profileId">Profile Id: </label>
+            <input type="text" id="profileId" name="Id"/>
+        </p>
+        <p>
+            <label for="profileName">Profile Name: </label>
+            <input type="text" name="Name" id="profileName"/>
+        </p>
+        <input type="submit" value="Save" id="saveProfile"/>
+    </form>
+</body>
+</html>

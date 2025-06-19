@@ -12,6 +12,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\styles\main.css" />
+  </ItemGroup>
   
   
 
