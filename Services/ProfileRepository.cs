@@ -2,7 +2,7 @@ using RESTREST_2.Models;
 using Microsoft.Extensions.Caching.Memory;
 namespace RESTREST_2.Services;
 
-public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemoryCache cache){
+public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemoryCache cache): IProfileRepository{
     private const string CacheKey = "CasStore";
 
     
@@ -32,16 +32,20 @@ public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemory
             return profiles; 
     }
 
-        public bool SaveProfile(Profile profile){
-            if (httpContextAccessor.HttpContext == null)
-                throw new Exception("HttpContext");
-            if (!cache.TryGetValue(CacheKey, out Profile[]? profiles))
-                return false;
-            var currentData = profiles!.ToList();
-            currentData.Add(profile);
-            cache.Set(CacheKey, currentData.ToArray(), TimeSpan.FromMinutes(30));
-            return true;
-            
-        }
+    public Profile GetProfileById(int id){
+        return GetAllProfiles().FirstOrDefault(p => p.Id == id)!;
+    }
+
+    public bool SaveProfile(Profile profile){
+        if (httpContextAccessor.HttpContext == null)
+            throw new Exception("HttpContext");
+        if (!cache.TryGetValue(CacheKey, out Profile[]? profiles))
+            return false;
+        var currentData = profiles!.ToList();
+        currentData.Add(profile);
+        cache.Set(CacheKey, currentData.ToArray(), TimeSpan.FromMinutes(30));
+        return true;
+        
+    }
     
 }

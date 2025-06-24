@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
-builder.Services.AddSingleton<ProfileRepository>();
+builder.Services.AddScoped<IProfileRepository,ProfileRepository>();
 
 var app = builder.Build();
 
@@ -29,6 +29,8 @@ app.MapGet("/", async context =>
 {
     context.Response.Redirect("/index.html");
 });
+
+
 
 app.MapControllers();
 
