@@ -12,11 +12,13 @@ public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemory
         profiles = [
                 new Profile{
                     Id = 1,
-                    Name = "Glenn Cock"
+                    Name = "Glenn Cock",
+                    IsActive = true
                 },
                 new Profile{
                     Id = 2,
-                    Name = "Klem Belmond"
+                    Name = "Klem Belmond",
+                    IsActive = true
                 },
                 new Profile{
                     Id = 3,
@@ -24,7 +26,8 @@ public class ProfileRepository(IHttpContextAccessor httpContextAccessor, IMemory
                 },
                 new Profile{
                     Id = 4,
-                    Name = "Kiosaki Yamatokka" 
+                    Name = "Kiosaki Yamatokka",
+                    IsActive = true
                 }
         ];
             cache.Set(CacheKey, profiles, TimeSpan.FromMinutes(30));
