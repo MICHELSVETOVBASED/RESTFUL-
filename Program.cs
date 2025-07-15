@@ -46,11 +46,28 @@ app.MapGet("/profiles/{id}", async (int id, Axer db) =>
         is Profile profile
         ? Results.Ok(profile)
         : Results.NotFound());
-app.MapPost("/profileslist", async (Profile profile, Axer db) => {
+app.MapPost("/profiles", async (Profile profile, Axer db) => {
     db.Profiles.Add(profile);
     await db.SaveChangesAsync();
 
     return Results.Created($"/profiles/{profile.Id}", profile);
+});
+app.MapPut("/profiles/{id}", async (int id, Profile inputProfile, Axer db) => {
+    var profile = await db.Profiles.FindAsync(id);
+    if (profile == null) return Results.NotFound();
+    profile.Name = inputProfile.Name;
+    profile.IsActive = inputProfile.IsActive;
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+app.MapDelete("/profiles/{id}", async (int id, Axer db) => {
+    if (await db.Profiles.FindAsync(id) is Profile profile){
+        db.Profiles.Remove(profile);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+
+    return Results.NotFound();
 });
 
 
